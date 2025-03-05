@@ -18,7 +18,8 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-lspconfig.rust_analyzer.setup({
+-- rust
+lspconfig.rust_analyzer.setup {
   on_attach = nvlsp.on_attach,
   capabilities = nvlsp.capabilities,
   filetypes = {"rust"},
@@ -28,11 +29,37 @@ lspconfig.rust_analyzer.setup({
       allFeatures = true,
     },
   },
-})
+}
 
--- configuring single server, example: typescript
--- lspconfig.ts_ls.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
--- }
+-- python
+lspconfig.pyright.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  filetypes = {"python"},
+}
+
+-- go
+lspconfig.gopls.setup {
+  on_attach = nvlsp.on_attach,
+  capabilities = nvlsp.capabilities,
+  cmd = {"gopls"},
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+  settings = {
+    gopls = {
+      completeUnimported = true,
+      usePlaceholders = true,
+      analyses = {
+        unusedparams = true,
+      },
+    },
+  },
+}
+
+-- typescript
+lspconfig.ts_ls.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+}
